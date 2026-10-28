@@ -7,17 +7,15 @@ interface ReleaseNotesRendererProps {
 
 /**
  * Safely renders GitHub Release Markdown into React elements without dangerouslySetInnerHTML.
- * Automatically escapes all untrusted text via React's text node rendering.
  */
 function renderInlineSegments(text: string): React.ReactNode[] {
-  // Tokenize inline code (`code`) and bold (**bold**) safely
   const tokens = text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g);
   return tokens.map((token, idx) => {
     if (token.startsWith('`') && token.endsWith('`') && token.length > 2) {
       return (
         <code
           key={idx}
-          className="px-1.5 py-0.5 rounded bg-[#080B12] border border-[#252D3D] font-mono text-xs text-[#38D9FF]"
+          className="px-1.5 py-0.5 rounded bg-[#0B0F14] border border-white/10 font-mono text-xs text-[#35D9F5]"
         >
           {token.slice(1, -1)}
         </code>
@@ -40,7 +38,7 @@ export const ReleaseNotesRenderer: React.FC<ReleaseNotesRendererProps> = ({
 }) => {
   if (!markdown || !markdown.trim()) {
     return (
-      <p className="text-sm text-[#9AA4B5] italic">
+      <p className="text-sm text-[#A5B0C0] italic">
         No detailed release notes provided for this version.
       </p>
     );
@@ -57,7 +55,7 @@ export const ReleaseNotesRenderer: React.FC<ReleaseNotesRendererProps> = ({
       elements.push(
         <ul
           key={`${keyPrefix}-ul`}
-          className="space-y-1.5 my-2.5 pl-4 text-sm text-[#9AA4B5] list-disc marker:text-[#38D9FF]"
+          className="space-y-1.5 my-2.5 pl-4 text-sm text-[#A5B0C0] list-disc marker:text-[#35D9F5]"
         >
           {listItems.items.map((item, idx) => (
             <li key={idx} className="leading-relaxed">
@@ -70,7 +68,7 @@ export const ReleaseNotesRenderer: React.FC<ReleaseNotesRendererProps> = ({
       elements.push(
         <ol
           key={`${keyPrefix}-ol`}
-          className="space-y-1.5 my-2.5 pl-4 text-sm text-[#9AA4B5] list-decimal marker:text-[#8B7CFF] marker:font-mono"
+          className="space-y-1.5 my-2.5 pl-4 text-sm text-[#A5B0C0] list-decimal marker:text-[#8B7CFF] marker:font-mono"
         >
           {listItems.items.map((item, idx) => (
             <li key={idx} className="leading-relaxed">
@@ -98,7 +96,7 @@ export const ReleaseNotesRenderer: React.FC<ReleaseNotesRendererProps> = ({
       elements.push(
         <h4
           key={`h4-${index}`}
-          className="text-xs font-mono uppercase tracking-wider text-[#38D9FF] mt-4 mb-1.5 font-semibold"
+          className="text-xs font-mono uppercase tracking-wider text-[#35D9F5] mt-4 mb-1.5 font-semibold"
         >
           {line.slice(4)}
         </h4>
@@ -147,7 +145,7 @@ export const ReleaseNotesRenderer: React.FC<ReleaseNotesRendererProps> = ({
 
     flushList(`line-${index}`);
     elements.push(
-      <p key={`p-${index}`} className="text-sm text-[#9AA4B5] leading-relaxed my-2">
+      <p key={`p-${index}`} className="text-sm text-[#A5B0C0] leading-relaxed my-2">
         {renderInlineSegments(line)}
       </p>
     );

@@ -8,14 +8,14 @@ export default {
     extend: {
       colors: {
         nexa: {
-          bg: '#080B12',
-          surface: '#101522',
-          surfaceHover: '#151C2E',
-          cyan: '#38D9FF',
+          bg: '#0B0F14',
+          secondary: '#111821',
+          card: '#151D28',
+          cyan: '#35D9F5',
           violet: '#8B7CFF',
           text: '#F5F7FA',
-          muted: '#9AA4B5',
-          border: '#252D3D',
+          muted: '#A5B0C0',
+          border: '#1F2A38',
         }
       },
       fontFamily: {
@@ -28,14 +28,14 @@ export default {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0.55' },
         },
-        'float-slow': {
-          '0%, 100%': { transform: 'translateY(0px)' },
-          '50%': { transform: 'translateY(-6px)' },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(10px)' },
+          '100%': { opacity: '1', transform: 'translateY(0)' },
         }
       },
       animation: {
         'pulse-subtle': 'pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'float-slow': 'float-slow 6s ease-in-out infinite',
+        'fade-up': 'fade-up 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards',
       }
     },
   },

@@ -1,7 +1,7 @@
 import { AppConfig, NormalizedAsset, NormalizedRelease } from '../types/app';
 
-const CACHE_KEY_PREFIX = 'appnexa_gh_releases_v1_';
-const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes cache to respect GitHub API rate limits
+const CACHE_KEY_PREFIX = 'appnexa_gh_releases_v2_';
+const CACHE_TTL_MS = 10 * 60 * 1000; // 10 minutes session cache to respect GitHub API rate limits
 
 interface RawGitHubAsset {
   id?: unknown;
@@ -32,7 +32,8 @@ export interface RepoReleasesResult {
   stableReleases: NormalizedRelease[];
   latestStableRelease: NormalizedRelease | null;
   latestRelease: NormalizedRelease | null;
-  source: 'live' | 'cache' | 'fallback';
+  source: 'live' | 'cache' | 'error';
+  apiConfirmed: boolean;
   errorMessage: string | null;
   rateLimited: boolean;
   fetchedAt: string;
@@ -98,7 +99,8 @@ function sanitizeAsset(raw: RawGitHubAsset): NormalizedAsset | null {
   const id = typeof raw.id === 'number' ? raw.id : 0;
   const name = typeof raw.name === 'string' ? raw.name.trim() : '';
   const sizeBytes = typeof raw.size === 'number' && raw.size >= 0 ? raw.size : 0;
-  const contentType = typeof raw.content_type === 'string' ? raw.content_type : 'application/octet-stream';
+  const contentType =
+    typeof raw.content_type === 'string' ? raw.content_type : 'application/octet-stream';
   const browserDownloadUrl =
     typeof raw.browser_download_url === 'string' ? raw.browser_download_url.trim() : '';
 
@@ -127,7 +129,10 @@ function sanitizeAsset(raw: RawGitHubAsset): NormalizedAsset | null {
   };
 }
 
-function selectPrimaryAsset(assets: NormalizedAsset[], platform: AppConfig['platform']): NormalizedAsset | null {
+function selectPrimaryAsset(
+  assets: NormalizedAsset[],
+  platform: AppConfig['platform']
+): NormalizedAsset | null {
   if (assets.length === 0) return null;
   if (platform === 'Android') {
     const apk = assets.find((asset) => asset.fileType === 'APK');
@@ -140,11 +145,13 @@ function selectPrimaryAsset(assets: NormalizedAsset[], platform: AppConfig['plat
   return assets[0];
 }
 
-function sanitizeRelease(raw: RawGitHubRelease, platform: AppConfig['platform']): NormalizedRelease | null {
+function sanitizeRelease(
+  raw: RawGitHubRelease,
+  platform: AppConfig['platform']
+): NormalizedRelease | null {
   if (!raw || typeof raw !== 'object') return null;
 
   const isDraft = Boolean(raw.draft);
-  // Exclude drafts completely from public view
   if (isDraft) return null;
 
   const id = typeof raw.id === 'number' ? raw.id : Date.now();
@@ -200,6 +207,7 @@ function sortReleasesByDate(releases: NormalizedRelease[]): NormalizedRelease[] 
 function buildResult(
   releases: NormalizedRelease[],
   source: RepoReleasesResult['source'],
+  apiConfirmed: boolean,
   errorMessage: string | null = null,
   rateLimited = false
 ): RepoReleasesResult {
@@ -211,6 +219,7 @@ function buildResult(
     latestStableRelease: stableReleases[0] ?? null,
     latestRelease: sorted[0] ?? null,
     source,
+    apiConfirmed,
     errorMessage,
     rateLimited,
     fetchedAt: new Date().toISOString()
@@ -237,11 +246,11 @@ export async function fetchAppReleases(
           Date.now() - parsed.timestamp < CACHE_TTL_MS &&
           Array.isArray(parsed.releases)
         ) {
-          return buildResult(parsed.releases, 'cache');
+          return buildResult(parsed.releases, 'cache', true);
         }
       }
     } catch {
-      // Ignore storage access errors
+      // Ignore sessionStorage access errors
     }
   }
 
@@ -263,18 +272,19 @@ export async function fetchAppReleases(
         response.headers.get('x-ratelimit-remaining') === '0';
 
       const reason = isRateLimit
-        ? 'GitHub API rate limit reached. Showing verified release snapshot.'
-        : `GitHub API returned status ${response.status}. Showing verified release snapshot.`;
+        ? 'GitHub API rate limit reached. Live release status could not be confirmed at this moment.'
+        : `GitHub API returned status ${response.status}. Live release data is currently unavailable.`;
 
-      return buildResult(app.fallbackReleases, 'fallback', reason, isRateLimit);
+      return buildResult([], 'error', false, reason, isRateLimit);
     }
 
     const data: unknown = await response.json();
     if (!Array.isArray(data)) {
       return buildResult(
-        app.fallbackReleases,
-        'fallback',
-        'Unexpected response format from GitHub API.'
+        [],
+        'error',
+        false,
+        'Unexpected response format received from the GitHub Releases API.'
       );
     }
 
@@ -294,12 +304,13 @@ export async function fetchAppReleases(
       // Ignore quota errors
     }
 
-    return buildResult(sanitizedReleases, 'live');
+    return buildResult(sanitizedReleases, 'live', true);
   } catch {
     return buildResult(
-      app.fallbackReleases,
-      'fallback',
-      'Unable to connect to GitHub API. Showing verified release snapshot.'
+      [],
+      'error',
+      false,
+      'Unable to reach the GitHub Releases API. Please check your connection or view releases directly on GitHub.'
     );
   }
 }

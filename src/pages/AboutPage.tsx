@@ -48,9 +48,8 @@ export const AboutPage: React.FC = () => {
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 space-y-16">
-        {/* Hero Header (Section 11) */}
         <section className="max-w-3xl space-y-5">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#101522] border border-[#252D3D] text-xs font-mono uppercase tracking-wider text-[#38D9FF]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#151D28] border border-white/10 text-xs font-mono uppercase tracking-wider text-[#35D9F5]">
             <span>About AppNexa</span>
           </div>
 
@@ -58,13 +57,12 @@ export const AboutPage: React.FC = () => {
             Built with Purpose. Shared with Everyone.
           </h1>
 
-          <p className="text-base sm:text-lg text-[#9AA4B5] leading-relaxed">
+          <p className="text-base sm:text-lg text-[#A5B0C0] leading-relaxed">
             AppNexa is an independent software platform created for discovering, exploring, and
             downloading applications developed and published directly by its creator.
           </p>
         </section>
 
-        {/* Core Pillars Grid */}
         <section aria-labelledby="pillars-heading" className="space-y-6">
           <h2 id="pillars-heading" className="sr-only">
             Platform Principles
@@ -75,23 +73,22 @@ export const AboutPage: React.FC = () => {
               return (
                 <div
                   key={pillar.title}
-                  className="p-6 sm:p-8 rounded-xl bg-[#101522] border border-[#252D3D] space-y-3"
+                  className="p-6 sm:p-8 rounded-2xl bg-[#151D28] border border-white/[0.08] space-y-3"
                 >
-                  <div className="w-11 h-11 rounded-lg bg-[#080B12] border border-[#252D3D] flex items-center justify-center text-[#38D9FF]">
+                  <div className="w-11 h-11 rounded-xl bg-[#0B0F14] border border-white/10 flex items-center justify-center text-[#35D9F5]">
                     <Icon className="w-5 h-5" />
                   </div>
-                  <h3 className="text-lg font-heading font-semibold text-[#F5F7FA]">
+                  <h3 className="text-lg font-heading font-bold text-[#F5F7FA]">
                     {pillar.title}
                   </h3>
-                  <p className="text-sm text-[#9AA4B5] leading-relaxed">{pillar.description}</p>
+                  <p className="text-sm text-[#A5B0C0] leading-relaxed">{pillar.description}</p>
                 </div>
               );
             })}
           </div>
         </section>
 
-        {/* Future Expansion Roadmap */}
-        <section className="rounded-2xl bg-[#101522] border border-[#252D3D] p-6 sm:p-10 space-y-6">
+        <section className="rounded-2xl bg-[#151D28] border border-white/[0.08] p-6 sm:p-10 space-y-6">
           <div className="max-w-2xl space-y-2">
             <span className="text-xs font-mono uppercase tracking-wider text-[#8B7CFF]">
               Platform Roadmap
@@ -99,69 +96,67 @@ export const AboutPage: React.FC = () => {
             <h2 className="text-2xl font-heading font-bold text-[#F5F7FA]">
               Future Expansion Across Software Platforms
             </h2>
-            <p className="text-sm text-[#9AA4B5] leading-relaxed">
-              While AppNexa currently focuses on native Android applications distributed as verified
-              APK packages, the underlying platform architecture is designed to support multi-platform
+            <p className="text-sm text-[#A5B0C0] leading-relaxed">
+              While AppNexa currently focuses on native Android applications distributed as APK
+              packages, the underlying platform architecture is designed to support multi-platform
               releases as new tools are completed.
             </p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 pt-2">
-            <div className="p-4 rounded-xl bg-[#080B12] border border-[#38D9FF]/40 space-y-1.5">
+            <div className="p-5 rounded-xl bg-[#111821] border border-[#35D9F5]/40 space-y-1.5">
               <div className="flex items-center justify-between text-xs font-mono">
-                <span className="text-[#38D9FF]">STAGE 01</span>
+                <span className="text-[#35D9F5]">STAGE 01</span>
                 <span className="text-emerald-400">ACTIVE</span>
               </div>
-              <h3 className="text-base font-heading font-semibold text-[#F5F7FA]">
+              <h3 className="text-base font-heading font-bold text-[#F5F7FA]">
                 Android Applications
               </h3>
-              <p className="text-xs text-[#9AA4B5] leading-relaxed">
+              <p className="text-xs text-[#A5B0C0] leading-relaxed">
                 Native Kotlin &amp; Jetpack Compose utilities distributed with direct APK downloads
                 and full GitHub release changelogs.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080B12] border border-[#252D3D] space-y-1.5">
+            <div className="p-5 rounded-xl bg-[#111821] border border-white/[0.08] space-y-1.5">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-[#8B7CFF]">STAGE 02</span>
-                <span className="text-[#9AA4B5]">PLANNED</span>
+                <span className="text-[#A5B0C0]">COMING SOON</span>
               </div>
-              <h3 className="text-base font-heading font-semibold text-[#F5F7FA]">
+              <h3 className="text-base font-heading font-bold text-[#F5F7FA]">
                 Windows Software
               </h3>
-              <p className="text-xs text-[#9AA4B5] leading-relaxed">
+              <p className="text-xs text-[#A5B0C0] leading-relaxed">
                 Lightweight desktop tools and standalone utilities engineered for Windows workflows.
               </p>
             </div>
 
-            <div className="p-4 rounded-xl bg-[#080B12] border border-[#252D3D] space-y-1.5">
+            <div className="p-5 rounded-xl bg-[#111821] border border-white/[0.08] space-y-1.5">
               <div className="flex items-center justify-between text-xs font-mono">
                 <span className="text-[#8B7CFF]">STAGE 03</span>
-                <span className="text-[#9AA4B5]">PLANNED</span>
+                <span className="text-[#A5B0C0]">COMING SOON</span>
               </div>
-              <h3 className="text-base font-heading font-semibold text-[#F5F7FA]">
-                Web &amp; Developer Tools
+              <h3 className="text-base font-heading font-bold text-[#F5F7FA]">
+                Web Applications
               </h3>
-              <p className="text-xs text-[#9AA4B5] leading-relaxed">
+              <p className="text-xs text-[#A5B0C0] leading-relaxed">
                 Browser-based web applications and specialized utilities for developers.
               </p>
             </div>
           </div>
         </section>
 
-        {/* Independent Non-Affiliation Statement */}
-        <section className="rounded-xl bg-[#101522]/70 border border-[#252D3D] p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <section className="rounded-2xl bg-[#111821] border border-white/[0.08] p-6 flex flex-col md:flex-row md:items-center justify-between gap-6">
           <div className="flex items-start gap-3.5 max-w-2xl">
-            <Info className="w-5 h-5 text-[#38D9FF] shrink-0 mt-0.5" />
+            <Info className="w-5 h-5 text-[#35D9F5] shrink-0 mt-0.5" />
             <div className="space-y-1">
               <h2 className="text-sm font-heading font-semibold text-[#F5F7FA]">
                 Independent Platform Disclosure
               </h2>
-              <p className="text-xs sm:text-sm text-[#9AA4B5] leading-relaxed">
+              <p className="text-xs sm:text-sm text-[#A5B0C0] leading-relaxed">
                 AppNexa is an independent software distribution website. AppNexa is not affiliated
                 with, endorsed by, or sponsored by Google, Android, GitHub, Microsoft, Spotify, or
-                any other third-party company. All third-party product and platform names are
-                trademarks of their respective owners.
+                any other third-party company.
               </p>
             </div>
           </div>
@@ -169,7 +164,7 @@ export const AboutPage: React.FC = () => {
           <div className="flex flex-wrap items-center gap-3 shrink-0">
             <Link
               to="/apps"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#38D9FF] text-[#080B12] font-semibold text-xs sm:text-sm transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#35D9F5] text-[#0B0F14] font-semibold text-xs sm:text-sm transition-colors"
             >
               <span>Explore Apps</span>
               <ArrowRight className="w-4 h-4" />
@@ -178,17 +173,16 @@ export const AboutPage: React.FC = () => {
               href="https://github.com/skakshay007"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#080B12] hover:bg-[#151C2E] border border-[#252D3D] text-xs sm:text-sm font-mono text-[#F5F7FA] transition-colors"
+              className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#151D28] hover:bg-[#1c2635] border border-white/10 text-xs sm:text-sm font-mono text-[#F5F7FA] transition-colors"
             >
               <span>Developer GitHub</span>
-              <ExternalLink className="w-3.5 h-3.5 text-[#38D9FF]" />
+              <ExternalLink className="w-3.5 h-3.5 text-[#35D9F5]" />
             </a>
           </div>
         </section>
 
-        {/* Security Assurance */}
-        <section className="flex items-center gap-2.5 text-xs font-mono text-[#9AA4B5]">
-          <ShieldCheck className="w-4 h-4 text-[#38D9FF] shrink-0" />
+        <section className="flex items-center gap-2.5 text-xs font-mono text-[#A5B0C0]">
+          <ShieldCheck className="w-4 h-4 text-[#35D9F5] shrink-0" />
           <span>
             All release metadata is fetched client-side via the official public GitHub REST API.
           </span>

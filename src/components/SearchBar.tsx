@@ -41,7 +41,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
   return (
     <div className={`relative flex items-center ${className}`}>
       <Search
-        className="w-4 h-4 text-[#9AA4B5] absolute left-3.5 pointer-events-none"
+        className="w-4 h-4 text-[#A5B0C0] absolute left-3.5 pointer-events-none"
         aria-hidden="true"
       />
       <input
@@ -51,7 +51,7 @@ export const SearchBar: React.FC<SearchBarProps> = ({
         onChange={(e) => onChange(e.target.value)}
         placeholder={placeholder}
         aria-label={placeholder}
-        className="w-full pl-10 pr-16 py-2.5 rounded-lg bg-[#101522] border border-[#252D3D] focus:border-[#38D9FF] focus:outline-none text-sm text-[#F5F7FA] placeholder-[#9AA4B5]/70 transition-colors"
+        className="w-full pl-10 pr-16 py-2.5 rounded-lg bg-[#0B0F14] border border-white/10 focus:border-[#35D9F5] focus:outline-none text-sm text-[#F5F7FA] placeholder-[#A5B0C0]/70 transition-colors"
       />
       {value ? (
         <button
@@ -61,13 +61,13 @@ export const SearchBar: React.FC<SearchBarProps> = ({
             inputRef.current?.focus();
           }}
           aria-label="Clear search query"
-          className="absolute right-2.5 p-1 rounded hover:bg-[#252D3D]/60 text-[#9AA4B5] hover:text-[#F5F7FA] transition-colors"
+          className="absolute right-2.5 p-1 rounded hover:bg-white/10 text-[#A5B0C0] hover:text-[#F5F7FA] transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
       ) : (
         enableShortcut && (
-          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono text-[#9AA4B5] bg-[#080B12] border border-[#252D3D] rounded absolute right-3 pointer-events-none">
+          <kbd className="hidden sm:inline-flex items-center px-1.5 py-0.5 text-[11px] font-mono text-[#A5B0C0] bg-[#151D28] border border-white/10 rounded absolute right-3 pointer-events-none">
             /
           </kbd>
         )

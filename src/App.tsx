@@ -19,7 +19,7 @@ export const App: React.FC = () => {
     <ReleasesProvider>
       <BrowserRouter>
         <ScrollToTop />
-        <div className="min-h-screen flex flex-col bg-[#080B12] text-[#F5F7FA]">
+        <div className="min-h-screen flex flex-col bg-[#0B0F14] text-[#F5F7FA]">
           <Navbar />
           <main className="flex-1">
             <Routes>

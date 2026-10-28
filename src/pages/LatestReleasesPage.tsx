@@ -44,17 +44,17 @@ export const LatestReleasesPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Page Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-[#252D3D]">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10 pb-8 border-b border-white/[0.08]">
           <div>
-            <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#101522] border border-[#252D3D] text-[11px] font-mono uppercase tracking-widest text-[#8B7CFF] mb-3">
+            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#151D28] border border-white/10 text-[11px] font-mono uppercase tracking-widest text-[#8B7CFF] mb-3">
               <GitBranch className="w-3.5 h-3.5" />
               <span>GitHub Releases Integration</span>
             </div>
             <h1 className="text-3xl sm:text-4xl font-heading font-bold text-[#F5F7FA]">
               Latest Releases
             </h1>
-            <p className="text-sm sm:text-base text-[#9AA4B5] mt-2 max-w-2xl">
-              Real-time release feed sorted by publication date. Stable releases are displayed by
+            <p className="text-sm sm:text-base text-[#A5B0C0] mt-2 max-w-2xl">
+              Live release feed sorted by publication date. Stable releases are displayed by
               default; draft releases are excluded automatically.
             </p>
           </div>
@@ -63,24 +63,24 @@ export const LatestReleasesPage: React.FC = () => {
             type="button"
             onClick={() => void refreshAllReleases()}
             disabled={isLoading}
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg bg-[#101522] hover:bg-[#151C2E] border border-[#252D3D] hover:border-[#38D9FF]/50 text-xs sm:text-sm font-mono text-[#F5F7FA] transition-colors self-start md:self-auto disabled:opacity-50"
+            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[#151D28] hover:bg-[#1c2635] border border-white/10 hover:border-[#35D9F5]/50 text-xs sm:text-sm font-mono text-[#F5F7FA] transition-colors self-start md:self-auto disabled:opacity-50"
           >
-            <RefreshCw className={`w-4 h-4 text-[#38D9FF] ${isLoading ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`w-4 h-4 text-[#35D9F5] ${isLoading ? 'animate-spin' : ''}`} />
             <span>Sync with GitHub API</span>
           </button>
         </div>
 
         {/* Channel & Application Filters */}
-        <div className="rounded-xl bg-[#101522]/80 border border-[#252D3D] p-4 sm:p-5 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="rounded-2xl bg-[#111821] border border-white/[0.08] p-4 sm:p-5 mb-8 flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs font-mono text-[#9AA4B5] mr-1">Release Channel:</span>
+            <span className="text-xs font-mono text-[#A5B0C0] mr-1">Release Channel:</span>
             <button
               type="button"
               onClick={() => setChannelFilter('stable')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                 channelFilter === 'stable'
-                  ? 'bg-[#38D9FF] text-[#080B12] font-semibold'
-                  : 'bg-[#080B12] text-[#9AA4B5] hover:text-[#F5F7FA] border border-[#252D3D]'
+                  ? 'bg-[#35D9F5] text-[#0B0F14] font-semibold'
+                  : 'bg-[#151D28] text-[#A5B0C0] hover:text-[#F5F7FA] border border-white/10'
               }`}
             >
               <CheckCircle2 className="w-3.5 h-3.5" />
@@ -92,8 +92,8 @@ export const LatestReleasesPage: React.FC = () => {
               onClick={() => setChannelFilter('all')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                 channelFilter === 'all'
-                  ? 'bg-[#38D9FF] text-[#080B12] font-semibold'
-                  : 'bg-[#080B12] text-[#9AA4B5] hover:text-[#F5F7FA] border border-[#252D3D]'
+                  ? 'bg-[#35D9F5] text-[#0B0F14] font-semibold'
+                  : 'bg-[#151D28] text-[#A5B0C0] hover:text-[#F5F7FA] border border-white/10'
               }`}
             >
               <span>All Published ({allPublishedReleases.length})</span>
@@ -104,8 +104,8 @@ export const LatestReleasesPage: React.FC = () => {
               onClick={() => setChannelFilter('prerelease')}
               className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                 channelFilter === 'prerelease'
-                  ? 'bg-[#8B7CFF] text-[#080B12] font-semibold'
-                  : 'bg-[#080B12] text-[#9AA4B5] hover:text-[#F5F7FA] border border-[#252D3D]'
+                  ? 'bg-[#8B7CFF] text-[#0B0F14] font-semibold'
+                  : 'bg-[#151D28] text-[#A5B0C0] hover:text-[#F5F7FA] border border-white/10'
               }`}
             >
               <FlaskConical className="w-3.5 h-3.5" />
@@ -116,14 +116,14 @@ export const LatestReleasesPage: React.FC = () => {
           </div>
 
           <div className="flex items-center gap-2">
-            <label htmlFor="release-app-filter" className="text-xs font-mono text-[#9AA4B5]">
+            <label htmlFor="release-app-filter" className="text-xs font-mono text-[#A5B0C0]">
               Application:
             </label>
             <select
               id="release-app-filter"
               value={selectedAppId}
               onChange={(e) => setSelectedAppId(e.target.value)}
-              className="px-3 py-1.5 rounded-lg bg-[#080B12] border border-[#252D3D] text-xs font-mono text-[#F5F7FA] focus:border-[#38D9FF] focus:outline-none"
+              className="px-3 py-1.5 rounded-lg bg-[#0B0F14] border border-white/10 text-xs font-mono text-[#F5F7FA] focus:border-[#35D9F5] focus:outline-none"
             >
               <option value="ALL">All Applications</option>
               {APPLICATIONS.map((app) => (
@@ -135,7 +135,7 @@ export const LatestReleasesPage: React.FC = () => {
           </div>
         </div>
 
-        {/* Fallback / API Error Notice */}
+        {/* API Error Notice */}
         {hasError && errorMessages.length > 0 && (
           <div className="mb-6">
             <ErrorState
@@ -147,19 +147,19 @@ export const LatestReleasesPage: React.FC = () => {
         )}
 
         {/* Releases List */}
-        {isLoading && filteredReleases.length === 0 ? (
+        {isLoading ? (
           <LoadingState variant="releases" count={2} />
         ) : filteredReleases.length === 0 ? (
           <EmptyState
             title={
               channelFilter === 'prerelease'
                 ? 'No prereleases currently published'
-                : 'No releases found for the selected filter'
+                : 'No confirmed releases found'
             }
             description={
               channelFilter === 'prerelease'
                 ? 'All currently published builds are stable releases. Switch to "Stable Only" or "All Published" to view available builds.'
-                : 'Try selecting "Stable Only" and "All Applications".'
+                : 'No releases matched the current filter or the GitHub API could not be reached.'
             }
             actionLabel="Show Stable Releases"
             onAction={() => {

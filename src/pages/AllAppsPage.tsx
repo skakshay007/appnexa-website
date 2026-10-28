@@ -30,7 +30,6 @@ export const AllAppsPage: React.FC = () => {
 
   const { getAppReleaseData, isLoading } = useReleases();
 
-  // Synchronize local state when URL query params change (e.g., from Navbar search or Category link)
   useEffect(() => {
     const qParam = searchParams.get('q') || '';
     const catParam = (searchParams.get('category') as DirectoryCategory | 'ALL') || 'ALL';
@@ -63,12 +62,10 @@ export const AllAppsPage: React.FC = () => {
     setSearchParams({}, { replace: true });
   };
 
-  // Section 6: Only display categories when relevant applications exist
   const activeCategories = useMemo(() => {
     return DIRECTORY_CATEGORY_LIST.filter((cat) => getCategoryAppCount(cat) > 0);
   }, []);
 
-  // Available platforms with published applications
   const activePlatforms = useMemo(() => {
     const set = new Set<PlatformType>();
     for (const app of APPLICATIONS) {
@@ -81,7 +78,6 @@ export const AllAppsPage: React.FC = () => {
     const normalizedQuery = searchQuery.trim().toLowerCase();
 
     const filtered = APPLICATIONS.filter((app) => {
-      // Search by name, description, category, or features
       const matchesQuery =
         !normalizedQuery ||
         app.name.toLowerCase().includes(normalizedQuery) ||
@@ -89,11 +85,9 @@ export const AllAppsPage: React.FC = () => {
         app.category.toLowerCase().includes(normalizedQuery) ||
         app.features.some((f) => f.title.toLowerCase().includes(normalizedQuery));
 
-      // Filter by category
       const matchesCategory =
         selectedCategory === 'ALL' || app.categories.includes(selectedCategory);
 
-      // Filter by platform
       const matchesPlatform =
         selectedPlatform === 'ALL' || app.platform === selectedPlatform;
 
@@ -107,7 +101,6 @@ export const AllAppsPage: React.FC = () => {
       if (sortBy === 'alpha-desc') {
         return b.name.localeCompare(a.name);
       }
-      // Sort by newest release publication date
       const relA =
         getAppReleaseData(a.id)?.latestStableRelease?.publishedAt || a.defaultReleaseDate;
       const relB =
@@ -127,24 +120,23 @@ export const AllAppsPage: React.FC = () => {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16">
         {/* Page Header */}
-        <div className="mb-10 pb-8 border-b border-[#252D3D]">
-          <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded bg-[#101522] border border-[#252D3D] text-[11px] font-mono uppercase tracking-widest text-[#38D9FF] mb-3">
+        <div className="mb-10 pb-8 border-b border-white/[0.08]">
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#151D28] border border-white/10 text-[11px] font-mono uppercase tracking-widest text-[#35D9F5] mb-3">
             <Layers className="w-3.5 h-3.5" />
             <span>Application Directory</span>
           </div>
           <h1 className="text-3xl sm:text-4xl font-heading font-bold text-[#F5F7FA]">
             All Applications
           </h1>
-          <p className="text-sm sm:text-base text-[#9AA4B5] mt-2 max-w-2xl">
-            Search applications by name, filter by category or platform, and download verified
+          <p className="text-sm sm:text-base text-[#A5B0C0] mt-2 max-w-2xl">
+            Search applications by name, filter by category or platform, and download official
             release packages directly from GitHub.
           </p>
         </div>
 
         {/* Search, Filter & Sort Controls Bar */}
-        <div className="rounded-xl bg-[#101522]/80 border border-[#252D3D] p-4 sm:p-5 mb-8 space-y-4">
+        <div className="rounded-2xl bg-[#111821] border border-white/[0.08] p-4 sm:p-6 mb-8 space-y-4">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
-            {/* Search Input */}
             <div className="lg:col-span-6">
               <SearchBar
                 value={searchQuery}
@@ -154,9 +146,8 @@ export const AllAppsPage: React.FC = () => {
               />
             </div>
 
-            {/* Platform Filter */}
             <div className="lg:col-span-3 flex items-center gap-2">
-              <Smartphone className="w-4 h-4 text-[#38D9FF] shrink-0" />
+              <Smartphone className="w-4 h-4 text-[#35D9F5] shrink-0" />
               <label htmlFor="platform-filter" className="sr-only">
                 Filter by Platform
               </label>
@@ -164,7 +155,7 @@ export const AllAppsPage: React.FC = () => {
                 id="platform-filter"
                 value={selectedPlatform}
                 onChange={(e) => setSelectedPlatform(e.target.value as PlatformType | 'ALL')}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#080B12] border border-[#252D3D] focus:border-[#38D9FF] focus:outline-none text-xs sm:text-sm font-mono text-[#F5F7FA]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0F14] border border-white/10 focus:border-[#35D9F5] focus:outline-none text-xs sm:text-sm font-mono text-[#F5F7FA]"
               >
                 <option value="ALL">All Platforms ({APPLICATIONS.length})</option>
                 {activePlatforms.map((platform) => (
@@ -175,7 +166,6 @@ export const AllAppsPage: React.FC = () => {
               </select>
             </div>
 
-            {/* Sort Selector */}
             <div className="lg:col-span-3 flex items-center gap-2">
               <ArrowUpDown className="w-4 h-4 text-[#8B7CFF] shrink-0" />
               <label htmlFor="sort-selector" className="sr-only">
@@ -185,7 +175,7 @@ export const AllAppsPage: React.FC = () => {
                 id="sort-selector"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value as SortOption)}
-                className="w-full px-3 py-2.5 rounded-lg bg-[#080B12] border border-[#252D3D] focus:border-[#38D9FF] focus:outline-none text-xs sm:text-sm font-mono text-[#F5F7FA]"
+                className="w-full px-3 py-2.5 rounded-lg bg-[#0B0F14] border border-white/10 focus:border-[#35D9F5] focus:outline-none text-xs sm:text-sm font-mono text-[#F5F7FA]"
               >
                 <option value="newest">Sort: Newest Release</option>
                 <option value="alpha-asc">Sort: Alphabetical (A–Z)</option>
@@ -194,11 +184,11 @@ export const AllAppsPage: React.FC = () => {
             </div>
           </div>
 
-          {/* Category Filter Pills (Only displaying categories with relevant applications) */}
-          <div className="pt-3 border-t border-[#252D3D] flex flex-wrap items-center justify-between gap-3">
+          {/* Category Filter Pills */}
+          <div className="pt-4 border-t border-white/[0.08] flex flex-wrap items-center justify-between gap-3">
             <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#9AA4B5] mr-1">
-                <Filter className="w-3.5 h-3.5 text-[#38D9FF]" />
+              <span className="inline-flex items-center gap-1.5 text-xs font-mono text-[#A5B0C0] mr-1">
+                <Filter className="w-3.5 h-3.5 text-[#35D9F5]" />
                 Categories:
               </span>
 
@@ -207,8 +197,8 @@ export const AllAppsPage: React.FC = () => {
                 onClick={() => handleCategoryChange('ALL')}
                 className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                   selectedCategory === 'ALL'
-                    ? 'bg-[#38D9FF] text-[#080B12] font-semibold'
-                    : 'bg-[#080B12] text-[#9AA4B5] hover:text-[#F5F7FA] border border-[#252D3D]'
+                    ? 'bg-[#35D9F5] text-[#0B0F14] font-semibold'
+                    : 'bg-[#151D28] text-[#A5B0C0] hover:text-[#F5F7FA] border border-white/10'
                 }`}
               >
                 All ({APPLICATIONS.length})
@@ -224,8 +214,8 @@ export const AllAppsPage: React.FC = () => {
                     onClick={() => handleCategoryChange(category)}
                     className={`px-3 py-1.5 rounded-lg text-xs font-mono transition-colors ${
                       isSelected
-                        ? 'bg-[#38D9FF] text-[#080B12] font-semibold'
-                        : 'bg-[#080B12] text-[#9AA4B5] hover:text-[#F5F7FA] border border-[#252D3D]'
+                        ? 'bg-[#35D9F5] text-[#0B0F14] font-semibold'
+                        : 'bg-[#151D28] text-[#A5B0C0] hover:text-[#F5F7FA] border border-white/10'
                     }`}
                   >
                     {category} ({count})
@@ -234,7 +224,7 @@ export const AllAppsPage: React.FC = () => {
               })}
             </div>
 
-            <span className="text-[11px] font-mono text-[#9AA4B5]">
+            <span className="text-[11px] font-mono text-[#A5B0C0]">
               Showing {filteredAndSortedApps.length} of {APPLICATIONS.length}{' '}
               {APPLICATIONS.length === 1 ? 'application' : 'applications'}
             </span>
